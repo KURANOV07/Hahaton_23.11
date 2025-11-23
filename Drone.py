@@ -655,3 +655,24 @@ class Drone:
     if __name__ == "__main__":
         drone = Drone()
         main_loop(drone)
+ # while not move_complete:
+        #    battery = client.get_battery_status()
+         #   if battery['voltage'] is not None and battery['voltage'] < 3.3:
+          #      print("Battery critical, landing")
+           #     client.landing()
+            #    break
+
+            obstacles = client.get_obstacle_info()
+            if obstacles['obstacle_detected']:
+                direction = obstacles['direction']
+                if direction == 'front':
+                    client.go_around_obstacle()
+                elif direction == 'left':
+                    client.set_yaw(30)
+                elif direction == 'right':
+                    client.set_yaw(-30)
+                elif direction == 'all_sides':
+                    current_height = 2.5
+                    client.set_height(current_height + 1.0)
+
+            client.update_flight()
